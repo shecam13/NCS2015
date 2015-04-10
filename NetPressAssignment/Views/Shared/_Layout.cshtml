@@ -27,6 +27,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+
+
 </head>
 <body>
 
@@ -63,9 +65,13 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        <h1>Clean Blog</h1>
-                        <hr class="small">
-                        <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
+                        @if (IsSectionDefined("PostTitle")){
+                            @RenderSection("PostTitle", false)
+                        }
+                        else{
+                            <p>ERRRROR</p>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -120,6 +126,7 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/clean-blog.min.js"></script>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
