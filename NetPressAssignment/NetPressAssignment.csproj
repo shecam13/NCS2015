@@ -205,6 +205,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\clean-blog.css" />
     <Content Include="Content\clean-blog.min.css" />
+    <Content Include="Content\cleditor\images\buttons.gif" />
+    <Content Include="Content\cleditor\images\toolbar.gif" />
+    <Content Include="Content\cleditor\jquery.cleditor.css" />
+    <Content Include="Content\cleditor\jquery.cleditor.js" />
+    <Content Include="Content\cleditor\jquery.cleditor.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -227,6 +232,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NetPressModel.edmx</DependentUpon>
       <LastGenOutput>NetPressModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Content\cleditor\images\Thumbs.db" />
+    <Content Include="Content\cleditor\jquery.cleditor.min.js.map">
+      <DependentUpon>jquery.cleditor.min.js</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\clean-blog.js" />
