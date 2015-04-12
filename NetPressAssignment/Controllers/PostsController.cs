@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NetPressAssignment.Models;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace NetPressAssignment.Controllers
 {
@@ -14,12 +16,60 @@ namespace NetPressAssignment.Controllers
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
 
+        //String cs = System.Configuration.ConfigurationManager.ConnectionStrings["NetPressEntities"].ConnectionString;
+
         // GET: Posts
         public ActionResult Index()
         {
             var posts = db.Posts.Include(p => p.Category).Include(p => p.User);
             return View(posts.ToList());
         }
+
+        public ActionResult GetPosts(String state)
+        {
+            //get posts according to the status chosen
+            var posts = db.Posts.Where(s => s.State == state);
+            return View(posts.ToList());
+        }
+
+        //int[] GetPosts()
+        //{
+        //    DataTable data = GetDataFromQuery("SELECT PostID FROM Posts WHERE State = 'Published'");
+            
+        //    if (data != null)
+        //    {
+        //        foreach(var row in data)
+        //        {
+
+        //        }
+        //    }
+        // }
+
+        //public List<int> ConvertTo<int>(DataTable data)
+        //{
+        //    List<int> Temp = new List<int>();
+        //    try
+        //    {
+        //        List<string> columnsNames = new List<string>();
+        //        foreach (DataColumn DataColumn in data.Columns)
+        //            columnsNames.Add(DataColumn.ColumnName);
+        //        Temp = data.AsEnumerable().ToList().ConvertAll<int>(row => getObject<int>(row, columnsNames));
+        //        return Temp;
+        //    }
+        //    catch
+        //    {
+        //        return Temp;
+        //    }
+
+        //}
+
+        //DataTable GetDataFromQuery(string query)
+        //{
+        //    SqlDataAdapter adap = new SqlDataAdapter(query, "cs");
+        //    DataTable data = new DataTable();
+        //    adap.Fill(data);
+        //    return data;
+        //}  
 
         // GET: Posts/Details/5
         public ActionResult Details(int? id)
