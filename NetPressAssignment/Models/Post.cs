@@ -11,12 +11,14 @@ namespace NetPressAssignment.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Web.Mvc;
     
     public partial class Post
     {
         public int PostID { get; set; }
         public List<Post> Posts { get; set; }
         public string Title { get; set; }
+        [AllowHtml]
         public string Body { get; set; }
         public int CategoryID { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }

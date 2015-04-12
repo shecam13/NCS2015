@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 
 namespace NetPressAssignment.Controllers
 {
+    [Authorize]
     public class PostsController : Controller
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
@@ -101,6 +102,7 @@ namespace NetPressAssignment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "PostID,Title,Body,CategoryID,DateCreated,LastModified,Username,State")] Post post)
         {
+      
             if (ModelState.IsValid)
             {
                 db.Posts.Add(post);
