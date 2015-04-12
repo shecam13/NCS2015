@@ -16,6 +16,7 @@ namespace NetPressAssignment.Models
     public partial class Post
     {
         public int PostID { get; set; }
+        public List<Post> Posts { get; set; }
         public string Title { get; set; }
         [AllowHtml]
         public string Body { get; set; }
