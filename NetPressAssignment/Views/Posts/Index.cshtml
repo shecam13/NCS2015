@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<NetPressAssignment.Models.Post>
 
 @{
-    ViewBag.Title = "My Blogs";
+    ViewBag.Title = "Index";
 }
 
 <h2>My Blogs</h2>
@@ -13,10 +13,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.Category.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateCreated)
@@ -34,11 +34,11 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>        
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
