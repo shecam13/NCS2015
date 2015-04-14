@@ -65,8 +65,8 @@
 
             <div class="form-group">
                 <div class="col-md-10">
-                    @Html.HiddenFor(model => model.DateCreated, new { @Value = System.DateTime.Now })
-                    @Html.HiddenFor(model => model.LastModified, new { @Value = System.DateTime.Now })
+                    @Html.HiddenFor(model => model.DateCreated, new { @Value = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") })
+                    @Html.HiddenFor(model => model.LastModified, new { @Value = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") })
                     @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
                     @Html.ValidationMessageFor(model => model.LastModified, "", new { @class = "text-danger" })
                 </div>
