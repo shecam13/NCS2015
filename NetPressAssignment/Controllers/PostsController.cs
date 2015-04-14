@@ -28,7 +28,7 @@ namespace NetPressAssignment.Controllers
 
         public ActionResult GetPosts(String state)
         {
-            //state = "published";
+            state = "published";
             //get posts according to the status chosen
             //var posts = db.Posts.Where(x => x.State == state);      
             //return View(posts.ToList());
