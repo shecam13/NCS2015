@@ -16,6 +16,8 @@ namespace NetPressAssignment.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        //private NetPressAssignmentContext _userManager;
+        //private ApplicationDbContext _userManager;
 
         public AccountController()
         {
