@@ -28,5 +28,9 @@ namespace NetPressAssignment.Models
     
         public virtual Category Category { get; set; }
         public virtual User User { get; set; }
+
+        //other properties
+        //public string state { get; set; }
+
     }
 }
