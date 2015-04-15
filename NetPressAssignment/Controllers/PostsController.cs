@@ -28,53 +28,53 @@ namespace NetPressAssignment.Controllers
 
         public ActionResult GetPosts(String state)
         {
+<<<<<<< HEAD
             state = "published";
+=======
+>>>>>>> parent of d99f86b... query to get posts by username and state (not complete)
             //get posts according to the status chosen
-            //var posts = db.Posts.Where(x => x.State == state);      
-            //return View(posts.ToList());
-
-            //IList<Post> PostsList = new List<Post>();
-            //var query = from posts in db.Posts
-            //            join users in db.Users
-            //            on posts.Username equals users.Username
-            //            where posts.State == state
-            //            select new Post
-            //            {
-            //                //PostID = posts.PostID,
-            //                Title = posts.Title,
-            //                CategoryID = posts.CategoryID,
-            //                DateCreated = posts.DateCreated,
-            //                LastModified = posts.LastModified,
-            //                State = posts.State
-            //            };
-
-            var query = from p in db.Posts
-                        join u in db.Users
-                        on p.Username equals u.Username
-                        join c in db.Categories
-                        on p.CategoryID equals c.CategoryID
-                        where p.State == state
-                        select new 
-                        {
-                            PostID = p.PostID,
-                            Title = p.Title,
-                            //Name = c.Name,
-                            DateCreated = p.DateCreated,
-                            LastModified = p.LastModified,
-                            State = p.State
-                        };
-
-            var PostsList = query.ToList().Select(x => new Post 
-                            {
-                                PostID = x.PostID,
-                                Title = x.Title,
-                                //Name = x.Name,
-                                DateCreated = x.DateCreated,
-                                LastModified = x.LastModified,
-                                State = x.State                         
-                            }).ToList();
-            return View(PostsList);
+            var posts = db.Posts.Where(s => s.State == state);
+            return View(posts.ToList());
         }
+
+        //int[] GetPosts()
+        //{
+        //    DataTable data = GetDataFromQuery("SELECT PostID FROM Posts WHERE State = 'Published'");
+            
+        //    if (data != null)
+        //    {
+        //        foreach(var row in data)
+        //        {
+
+        //        }
+        //    }
+        // }
+
+        //public List<int> ConvertTo<int>(DataTable data)
+        //{
+        //    List<int> Temp = new List<int>();
+        //    try
+        //    {
+        //        List<string> columnsNames = new List<string>();
+        //        foreach (DataColumn DataColumn in data.Columns)
+        //            columnsNames.Add(DataColumn.ColumnName);
+        //        Temp = data.AsEnumerable().ToList().ConvertAll<int>(row => getObject<int>(row, columnsNames));
+        //        return Temp;
+        //    }
+        //    catch
+        //    {
+        //        return Temp;
+        //    }
+
+        //}
+
+        //DataTable GetDataFromQuery(string query)
+        //{
+        //    SqlDataAdapter adap = new SqlDataAdapter(query, "cs");
+        //    DataTable data = new DataTable();
+        //    adap.Fill(data);
+        //    return data;
+        //}  
 
         // GET: Posts/Details/5
         public ActionResult Details(int? id)
