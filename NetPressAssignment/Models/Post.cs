@@ -11,26 +11,19 @@ namespace NetPressAssignment.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
     
     public partial class Post
     {
         public int PostID { get; set; }
-        public List<Post> Posts { get; set; }
         public string Title { get; set; }
-        [AllowHtml]
         public string Body { get; set; }
         public int CategoryID { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> LastModified { get; set; }
-        public string Username { get; set; }
-        public string State { get; set; }
+        public string UserID { get; set; }
+        public Nullable<int> State { get; set; }
     
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual Category Category { get; set; }
-        public virtual User User { get; set; }
-
-        //other properties
-        //public string state { get; set; }
-
     }
 }

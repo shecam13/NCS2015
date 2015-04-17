@@ -23,7 +23,6 @@ namespace NetPressAssignment.Models
 
         public System.Data.Entity.DbSet<NetPressAssignment.Models.Category> Categories { get; set; }
 
-        public System.Data.Entity.DbSet<NetPressAssignment.Models.User> Users { get; set; }
     
     }
 }

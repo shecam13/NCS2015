@@ -44,29 +44,13 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Username, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Username", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
                 @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.RadioButtonFor(model => model.State, "Draft") Draft
-                    @Html.RadioButtonFor(model => model.State, "Published") Published
-                    @Html.RadioButtonFor(model => model.State, "Archived") Archived
+                    @Html.DropDownList("State", new List<SelectListItem>
+                    { new SelectListItem { Text = "Draft", Value = "1", Selected=true},
+                    new SelectListItem { Text = "Published", Value = "2"},
+                    new SelectListItem { Text = "Archived", Value = "3"}}, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-10">
-                    @Html.HiddenFor(model => model.DateCreated, new {  })
-                    @Html.HiddenFor(model => model.LastModified, new { @Value = System.DateTime.Now })
-                    @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(model => model.LastModified, "", new { @class = "text-danger" })
                 </div>
             </div>
 

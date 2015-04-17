@@ -26,7 +26,7 @@ namespace NetPressAssignment.Models
         }
     
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
-        public virtual DbSet<User> Users { get; set; }
     }
 }

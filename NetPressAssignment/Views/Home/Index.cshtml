@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<NetPressAssignment.Models.Post>
-
+<!--the above will refer to a view model later on so that we can adjust how labels are displayed without modifying the model itself-->
 @{
     ViewBag.Title = "Home Page";
 }
@@ -21,7 +21,7 @@
                             @Html.DisplayFor(modelItem => p.Category.Name)
                         </h3>
                     </a>
-                    <p class="post-meta">Posted by <a href="#">@Html.DisplayFor(modelItem => p.Username) </a>Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
+                    <p class="post-meta">Posted by <a href="#">@Html.DisplayFor(modelItem => p.AspNetUser.UserName) </a>Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
                 }
             </div>
             <hr>
@@ -41,7 +41,7 @@
 <hr>
 
 @section PostTitle{
-    <h1>WordPress</h1>
+    <h1>NETPress</h1>
     <hr class="small">
     <span class="subheading">By Clara Galea, Sheryl Camiller, Natasha Nikolic</span>
 }

@@ -165,11 +165,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetUser.cs">
+      <DependentUpon>NetPressModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>NetPressModel.tt</DependentUpon>
     </Compile>
@@ -192,9 +194,6 @@
       <DependentUpon>NetPressModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Post.cs">
-      <DependentUpon>NetPressModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.cs">
       <DependentUpon>NetPressModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -299,11 +298,6 @@
     <Content Include="Views\Categories\Details.cshtml" />
     <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Posts\GetPosts.cshtml" />
   </ItemGroup>
   <ItemGroup>

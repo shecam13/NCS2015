@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Sheryl\SkyDrive\Documents\University_SD\Year2\Semester2\CIS2054-WebApplications\NetPressAssignment\NetPressAssignment\Models\NetPressModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\natasha nikolic\Documents\GitHub\NCS2015\NetPressAssignment\Models\NetPressModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using NetPressAssignment.Models;
 using System.Configuration;
 using System.Data.SqlClient;
+using Microsoft.AspNet.Identity;
 
 namespace NetPressAssignment.Controllers
 {
@@ -22,13 +23,32 @@ namespace NetPressAssignment.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            var posts = db.Posts.Include(p => p.Category).Include(p => p.User);
-            return View(posts.ToList());
+            //this code is repeated in Home Controller index() method --> Decide where it is needed? 
+
+            //get the logged in userId by using Identity
+            var userId = User.Identity.GetUserId();
+
+            //create a list of posts that will be returned to the view
+            List<Post> posts = null;
+            //check if user logged in is admin then show all posts
+            if (User.IsInRole("admin"))
+            {
+                //use include to get all post related information including the categories that will be stored in memmory
+                posts = db.Posts.Include(p => p.Category).ToList();
+            }
+            //else show only the author's posts
+            else
+            {
+                //get only the posts that match the user id
+                posts = db.Posts.Include(p => p.Category).Where(p => p.UserID == userId).ToList();
+            }
+
+            return View(posts);
         }
 
-        public ActionResult GetPosts(String state)
+        public ActionResult GetPosts(int state)
         {
-            state = "published";
+            state = 0;
             //get posts according to the status chosen
             //var posts = db.Posts.Where(x => x.State == state);      
             //return View(posts.ToList());
@@ -47,10 +67,10 @@ namespace NetPressAssignment.Controllers
             //                LastModified = posts.LastModified,
             //                State = posts.State
             //            };
-
+            
             var query = from p in db.Posts
-                        join u in db.Users
-                        on p.Username equals u.Username
+             //           join u in db.Users
+             //           on p.Username equals u.Username
                         join c in db.Categories
                         on p.CategoryID equals c.CategoryID
                         where p.State == state
@@ -74,7 +94,7 @@ namespace NetPressAssignment.Controllers
                                 State = x.State                         
                             }).ToList();
             return View(PostsList);
-        }
+        } 
 
         // GET: Posts/Details/5
         public ActionResult Details(int? id)
@@ -94,8 +114,9 @@ namespace NetPressAssignment.Controllers
         // GET: Posts/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name");
-            ViewBag.Username = new SelectList(db.Users, "Username", "Password");
+            //lists are loaded in the view 
+            ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name");
+            //ViewBag.StateList = new SelectList(db.Posts, "State");
             return View();
         }
 
@@ -104,18 +125,26 @@ namespace NetPressAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PostID,Title,Body,CategoryID,DateCreated,LastModified,Username,State")] Post post)
+        //it is not important to bind everything, just bind items that are requested in the view
+        public ActionResult Create([Bind(Include = "Title,Body,CategoryID,State")] Post post)
         {
       
             if (ModelState.IsValid)
             {
+                //get the user id of the logged in user and save it to the post userid column
+                post.UserID = User.Identity.GetUserId();
+                //pass the date created and modified 
+                post.DateCreated = DateTime.Now;
+                post.LastModified = DateTime.Now;
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            ViewBag.Username = new SelectList(db.Users, "Username", "Password", post.Username);
+            ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
+        //  ViewBag.StateList = new SelectList(db.Posts, "State");
+            
+           
             return View(post);
         }
 
@@ -132,7 +161,7 @@ namespace NetPressAssignment.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            ViewBag.Username = new SelectList(db.Users, "Username", "Password", post.Username);
+            
             return View(post);
         }
 
@@ -141,16 +170,20 @@ namespace NetPressAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PostID,Title,Body,CategoryID,DateCreated,LastModified,Username,State")] Post post)
+        public ActionResult Edit([Bind(Include = "PostID,Title,Body,CategoryID,State")] Post post)
         {
             if (ModelState.IsValid)
             {
+                //get the user id of the logged in user and save it to the post userid column
+                post.UserID = User.Identity.GetUserId();
+                //pass the date modified 
+                post.LastModified = DateTime.Now;
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            ViewBag.Username = new SelectList(db.Users, "Username", "Password", post.Username);
+            
             return View(post);
         }
 
