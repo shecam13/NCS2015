@@ -9,9 +9,10 @@
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
-                 @foreach (var p in Model)
-                {   
-                    <a href="post.html">
+                  @foreach (var p in Model)
+                  {   
+             
+                    <a href="Details.cshtml">
                         <h2 class="post-title">
                             @*@Html.DisplayNameFor(model => model.Title)*@                            
                             @Html.DisplayFor(modelItem => p.Title)
@@ -21,8 +22,8 @@
                             @Html.DisplayFor(modelItem => p.Category.Name)
                         </h3>
                     </a>
-                    <p class="post-meta">Posted by <a href="#">@Html.DisplayFor(modelItem => p.AspNetUser.UserName) </a>Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
-                }
+                    <p class="post-meta">Posted by @Html.DisplayFor(modelItem => p.AspNetUser.UserName) Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
+                  }
             </div>
             <hr>
             <div class="post-preview">
