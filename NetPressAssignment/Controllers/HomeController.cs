@@ -15,6 +15,8 @@ using System.Web;
 using System.Web.Mvc;
 using NetPressAssignment.Models;
 using Microsoft.AspNet.Identity;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace NetPressAssignment.Controllers
 {
@@ -26,26 +28,9 @@ namespace NetPressAssignment.Controllers
         Models.Post p = new Models.Post();
         public ActionResult Index()
         {
-            //get the logged in userId by using Identity
-            var userId = User.Identity.GetUserId();
-            
-            //create a list of posts that will be returned to the view
-            List<Post> posts = null;
-            //check if user logged in is admin then show all posts
-            if(User.IsInRole("admin"))
-            {
-                //use include to get all post related information including the categories that will be stored in memmory
-                posts = db.Posts.Include(p => p.Category).ToList();
-            }
-            //else show only the author's posts
-            else
-            {
-                //get only the posts that match the user id
-                posts = db.Posts.Include(p => p.Category).Where(p => p.UserID == userId).ToList();
-            }
-
-            return View(posts);
-            
+            var posts = db.Posts.Where(x => x.State == 2).ToList() ;
+            var posts2 = posts.OrderByDescending(x => x.DateCreated);  //order by descending according to date created. 
+            return View(posts2);               
         }
 
         public ActionResult About()
