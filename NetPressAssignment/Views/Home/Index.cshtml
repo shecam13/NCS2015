@@ -9,26 +9,26 @@
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
-                  @foreach (var p in Model)
-                  {
+                @foreach (var p in Model)
+                {
 
-                    @*<a href="@Url.Action("Details", "Posts")">*@
-                        <h2 class="post-title">
-                            @*@Html.DisplayNameFor(model => model.Title)*@
-                            @Html.DisplayFor(modelItem => p.Title)
-                        </h2>
-                        <h3 class="post-subtitle">
-                            @*@Html.DisplayNameFor(model => model.Category)*@
-                            @Html.DisplayFor(modelItem => p.Category.Name)
-                        </h3>
-                        <p class="post-meta">Posted by @Html.DisplayFor(modelItem => p.AspNetUser.UserName) Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
-                            
-                      <div class=" post-preview">  
-                            @Html.ActionLink("View Post", "Details", "Posts", new { id = p.PostID }, null)<br/>
-                      </div>
-                      <hr />
-                      
-                  }
+                    <a href="@Url.Action("Details", "Posts", new { id = p.PostID })" />
+                    <h2 class="post-title">
+                        @*@Html.DisplayNameFor(model => model.Title)*@
+                        @Html.DisplayFor(modelItem => p.Title)
+                    </h2>
+                    <h3 class="post-subtitle">
+                        @*@Html.DisplayNameFor(model => model.Category)*@
+                        @Html.DisplayFor(modelItem => p.Category.Name)
+                    </h3>
+                    <p class="post-meta">Posted by @Html.DisplayFor(modelItem => p.AspNetUser.UserName) Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
+
+                    @*<div class=" post-preview">
+                              @Html.ActionLink("View Post", "Details", "Posts", new { id = p.PostID }, null)<br/>
+                        </div>*@
+                    <hr />
+
+                }
             </div>
             <hr>
             <div class="post-preview">
@@ -42,6 +42,7 @@
                 </li>
             </ul>
         </div>
+
     </div>
 </div>
 <hr>
