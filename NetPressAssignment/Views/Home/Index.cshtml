@@ -4,6 +4,7 @@
     ViewBag.Title = "Home Page";
 }
 
+
 <!-- Main Content -->
 <div class="container">
     <div class="row">
@@ -21,7 +22,7 @@
                             @Html.DisplayFor(modelItem => p.Category.Name)
                         </h3>
                     </a>
-                    <p class="post-meta">Posted by <a href="#">@Html.DisplayFor(modelItem => p.AspNetUser.UserName) </a>Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
+                    <p class="post-meta">Posted by <a href="#">@Html.DisplayFor(modelItem => p.UserID) </a>Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
                 }
             </div>
             <hr>

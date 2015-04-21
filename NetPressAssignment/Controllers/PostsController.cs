@@ -27,6 +27,7 @@ namespace NetPressAssignment.Controllers
 
             //get the logged in userId by using Identity
             var userId = User.Identity.GetUserId();
+                        
 
             //create a list of posts that will be returned to the view
             List<Post> posts = null;
@@ -117,6 +118,7 @@ namespace NetPressAssignment.Controllers
             //lists are loaded in the view 
             ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name");
             //ViewBag.StateList = new SelectList(db.Posts, "State");
+
             return View();
         }
 

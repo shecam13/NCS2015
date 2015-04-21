@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NetPressAssignment.Models;
+using NetPressAssignment.ViewModels;
 
 namespace NetPressAssignment.Controllers
 {
@@ -14,9 +15,12 @@ namespace NetPressAssignment.Controllers
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
 
+        CategoryViewModel categoryViewModel = new CategoryViewModel();
+
         // GET: Categories
         public ActionResult Index()
         {
+            
             return View(db.Categories.ToList());
         }
 
@@ -38,7 +42,7 @@ namespace NetPressAssignment.Controllers
         // GET: Categories/Create
         public ActionResult Create()
         {
-            return View();
+            return View(categoryViewModel);
         }
 
         // POST: Categories/Create
@@ -57,7 +61,7 @@ namespace NetPressAssignment.Controllers
 
             return View(category);
         }
-
+      
         // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {
