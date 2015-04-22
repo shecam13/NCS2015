@@ -7,8 +7,21 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
+        <h3>@Html.ActionLink("Create New", "Create", "Posts")</h3>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+            {
+                <p>
+                    Author: @Html.TextBox("authorSearch")
+                    Category: @Html.DropDownList("postCategory", "All")
+                    Title: @Html.TextBox("SearchString")
+                    <input type="submit" value="Filter" class="btn btn-default" />
+                </p>
+            }
+
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
+                   
+
                 @foreach (var p in Model)
                 {
 
