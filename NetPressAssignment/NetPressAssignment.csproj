@@ -302,6 +302,8 @@
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Posts\GetPosts.cshtml" />
     <Content Include="Views\Shared\SideBar.cshtml" />
+    <Content Include="Views\Shared\GuestPartialNav.cshtml" />
+    <Content Include="Views\Shared\BlogAuthorPartialNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -47,16 +47,31 @@
                 @*@Html.ActionLink("NETPress", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            @*<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-left">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
+            </div>*@
+            <div class="navbar-top, navbar-btn pull-left">
+                
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.Partial("BlogAuthorPartialNav")
+                }
+                else
+                {
+                    @Html.Partial("GuestPartialNav")
+                }
             </div>
-            <!-- /.navbar-collapse -->
-        </div>
+            <div class="navbar-top, navbar-btn pull-right">
+                    @Html.Partial("_LoginPartial")
+            </div>
+
+                <!-- /.navbar-collapse -->
+            </div>
         <!-- /.container -->
     </nav>
     <!-- Page Header -->
@@ -113,7 +128,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted">&copy; @DateTime.Now.Year - My Application</p>
+                    <p class="copyright text-muted">&copy; @DateTime.Now.Year - NETPress Blog</p>
                 </div>
             </div>
     </div>
