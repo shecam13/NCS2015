@@ -1,4 +1,7 @@
-﻿@model IEnumerable<NetPressAssignment.Models.Post>
+﻿@*@model IEnumerable<NetPressAssignment.Models.Post>*@
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<NetPressAssignment.Models.Post>
 <!--the above will refer to a view model later on so that we can adjust how labels are displayed without modifying the model itself-->
 @{
     ViewBag.Title = "Home Page";
@@ -13,7 +16,7 @@
                 <p>
                     Author: @Html.TextBox("authorSearch")
                     Category: @Html.DropDownList("postCategory", "All")
-                    Title: @Html.TextBox("SearchString")
+                    Title: @Html.TextBox("searchString")
                     <input type="submit" value="Filter" class="btn btn-default" />
                 </p>
             }
@@ -21,7 +24,6 @@
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
                    
-
                 @foreach (var p in Model)
                 {
 
@@ -39,23 +41,19 @@
                     @*<div class=" post-preview">
                               @Html.ActionLink("View Post", "Details", "Posts", new { id = p.PostID }, null)<br/>
                         </div>*@
-                    <hr />
-
                 }
             </div>
             <hr>
-            <div class="post-preview">
-                @Html.ActionLink("List of posts", "Index", "Posts")<br />
-            </div>
-            <hr>
+
             <!-- Pager -->
             <ul class="pager">
-                <li class="next">
-                    <a href="#">Older Posts &rarr;</a>
-                </li>
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, authorSearch = Request.QueryString["authorSearch"], postCategory = Request.QueryString["postCategory"], searchString = Request.QueryString["searchString"] }))
+                Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Posts
             </ul>
-        </div>
+            
 
+        </div>
+        
     </div>
 </div>
 <hr>

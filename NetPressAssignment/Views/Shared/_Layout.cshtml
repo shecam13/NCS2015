@@ -48,18 +48,26 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             @*<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-left">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>*@
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>*@
             <div class="navbar-top, navbar-btn pull-left">
-                
+
                 @if (User.Identity.IsAuthenticated)
                 {
-                    @Html.Partial("BlogAuthorPartialNav")
+                    if (User.IsInRole("admin"))
+                    {
+                        @Html.Partial("AdminPartialNav")
+                    }
+                    else
+                    {
+                        @Html.Partial("BlogAuthorPartialNav")
+                    }
+
                 }
                 else
                 {
@@ -67,11 +75,11 @@
                 }
             </div>
             <div class="navbar-top, navbar-btn pull-right">
-                    @Html.Partial("_LoginPartial")
+                @Html.Partial("_LoginPartial")
             </div>
 
-                <!-- /.navbar-collapse -->
-            </div>
+            <!-- /.navbar-collapse -->
+        </div>
         <!-- /.container -->
     </nav>
     <!-- Page Header -->
@@ -81,10 +89,12 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="site-heading">
-                        @if (IsSectionDefined("PostTitle")){
+                        @if (IsSectionDefined("PostTitle"))
+                        {
                             @RenderSection("PostTitle", false)
                         }
-                        else{
+                        else
+                        {
                             <p>Our Blog</p>
                         }
 
@@ -100,40 +110,40 @@
         <hr />
         <footer>
             <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <ul class="list-inline text-center">
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted">&copy; @DateTime.Now.Year - NETPress Blog</p>
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <ul class="list-inline text-center">
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="copyright text-muted">&copy; @DateTime.Now.Year - NETPress Blog</p>
+                    </div>
                 </div>
             </div>
-    </div>
-    
-    </footer>
+
+        </footer>
     </div>
 
     <!-- jQuery -->
@@ -151,4 +161,5 @@
 
 
 </body>
+
 </html>

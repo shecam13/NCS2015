@@ -21,7 +21,7 @@ namespace NetPressAssignment.Controllers
         //String cs = System.Configuration.ConfigurationManager.ConnectionStrings["NetPressEntities"].ConnectionString;
 
         // GET: Posts
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pageSize = 10)
         {
             //this code is repeated in Home Controller index() method --> Decide where it is needed? 
 
@@ -31,6 +31,7 @@ namespace NetPressAssignment.Controllers
 
             //create a list of posts that will be returned to the view
             List<Post> posts = null;
+            
             //check if user logged in is admin then show all posts
             if (User.IsInRole("admin"))
             {
@@ -42,9 +43,11 @@ namespace NetPressAssignment.Controllers
             {
                 //get only the posts that match the user id
                 posts = db.Posts.Include(p => p.Category).Where(p => p.UserID == userId).ToList();
+                
             }
-
+            
             return View(posts);
+            
         }
 
 
@@ -138,6 +141,8 @@ namespace NetPressAssignment.Controllers
             {
                 //get the user id of the logged in user and save it to the post userid column
                 post.UserID = User.Identity.GetUserId();
+                //keep the same value for the date created 
+               
                 //pass the date modified 
                 post.LastModified = DateTime.Now;
                 db.Entry(post).State = EntityState.Modified;

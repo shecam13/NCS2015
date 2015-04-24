@@ -11,6 +11,7 @@ using NetPressAssignment.ViewModels;
 
 namespace NetPressAssignment.Controllers
 {
+    [Authorize (Roles = "Admin")]
     public class CategoriesController : Controller
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();

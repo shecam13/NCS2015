@@ -49,6 +49,11 @@ namespace NetPressAssignment.Models
     public class LoginViewModel
     {
         [Required]
+        [Display(Name = "Username")]
+        [EmailAddress]
+        public string UserName { get; set; }
+
+        [Required]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
@@ -64,6 +69,10 @@ namespace NetPressAssignment.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Username")]
+        public string UserName { get; set; }
+        
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
