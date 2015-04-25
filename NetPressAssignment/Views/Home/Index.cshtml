@@ -26,7 +26,7 @@
                 @foreach (var p in Model)
                 {
 
-                    <a href="@Url.Action("Details", "Posts", new { id = p.PostID })" />
+                    <a href="@Url.Action("Details", "Posts", new { id = p.PostID })" >
                     <h2 class="post-title">
                         @*@Html.DisplayNameFor(model => model.Title)*@
                         @Html.DisplayFor(modelItem => p.Title)
@@ -40,6 +40,7 @@
                     @*<div class=" post-preview">
                               @Html.ActionLink("View Post", "Details", "Posts", new { id = p.PostID }, null)<br/>
                         </div>*@
+                     </a>
                 }
             </div>
             <hr>
