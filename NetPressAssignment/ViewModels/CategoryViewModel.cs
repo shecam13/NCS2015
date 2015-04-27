@@ -10,7 +10,7 @@ namespace NetPressAssignment.ViewModels
     {
 
 
-        [Display(Name = "Category Name")]
+        [Display(Name = "Category")]
         [Required(ErrorMessage = "Category name required")]
         public string Name { get; set; }
 

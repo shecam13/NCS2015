@@ -3,8 +3,6 @@
     ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
-
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -45,4 +43,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section PostTitle{
+    <h1>@ViewBag.Title</h1>
+    <hr class="small">
 }

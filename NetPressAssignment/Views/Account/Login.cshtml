@@ -4,7 +4,6 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
@@ -67,4 +66,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section PostTitle{
+    <h1>@ViewBag.Title</h1>
+    <hr class="small">
 }

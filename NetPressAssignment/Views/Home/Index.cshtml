@@ -10,15 +10,16 @@
 <!-- Main Content -->
 <div class="container">
     <div class="row">
-            @using (Html.BeginForm("Index", "Home", FormMethod.Get))
-            {
-                <p>
-                    Author: @Html.TextBox("authorSearch")
-                    Category: @Html.DropDownList("postCategory", "All")
-                    Title: @Html.TextBox("searchString")
-                    <input type="submit" value="Filter" class="btn btn-default" />
-                </p>
-            }
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <p>
+                Author: @Html.TextBox("authorSearch")
+                Category: @Html.DropDownList("postCategory", "All")
+                Title: @Html.TextBox("searchString")
+                <input type="submit" value="Filter" class="btn btn-default" />
+            </p>
+        }
+        <hr>
 
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
@@ -26,7 +27,7 @@
                 @foreach (var p in Model)
                 {
 
-                    <a href="@Url.Action("Details", "Posts", new { id = p.PostID })" />
+                    <a href="@Url.Action("Details", "Posts", new { id = p.PostID })" >
                     <h2 class="post-title">
                         @*@Html.DisplayNameFor(model => model.Title)*@
                         @Html.DisplayFor(modelItem => p.Title)
@@ -36,7 +37,7 @@
                         @Html.DisplayFor(modelItem => p.Category.Name)
                     </h3>
                     <p class="post-meta">Posted by @Html.DisplayFor(modelItem => p.AspNetUser.UserName) Date Created @Html.DisplayFor(modelItem => p.DateCreated) </p>
-
+                    </a>
                     @*<div class=" post-preview">
                               @Html.ActionLink("View Post", "Details", "Posts", new { id = p.PostID }, null)<br/>
                         </div>*@
@@ -55,7 +56,7 @@
         
     </div>
 </div>
-<hr>
+
 
 @section PostTitle{
     <h1>NETPress</h1>

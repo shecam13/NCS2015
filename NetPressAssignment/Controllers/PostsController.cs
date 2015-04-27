@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NetPressAssignment.Models;
+using NetPressAssignment.ViewModels;
 using System.Configuration;
 using System.Data.SqlClient;
 using Microsoft.AspNet.Identity;
@@ -21,7 +22,7 @@ namespace NetPressAssignment.Controllers
         //String cs = System.Configuration.ConfigurationManager.ConnectionStrings["NetPressEntities"].ConnectionString;
 
         // GET: Posts
-        public ActionResult Index(int page = 1, int pageSize = 10)
+        public ActionResult Index() //int page = 1, int pageSize = 10
         {
             //this code is repeated in Home Controller index() method --> Decide where it is needed? 
 
@@ -40,9 +41,26 @@ namespace NetPressAssignment.Controllers
             }
             //else show only the author's posts
             else
-            {
-                //get only the posts that match the user id
+            {             
                 posts = db.Posts.Include(p => p.Category).Where(p => p.UserID == userId).ToList();
+
+                //var userID = User.Identity.GetUserId();
+
+                var viewmodel = (from p in db.Posts
+                                 join c in db.Categories on p.CategoryID equals c.CategoryID
+                                 where userId == p.UserID
+                                 //where userID equals p.UserID
+                                 select new PostViewModel()
+                                 {
+                                     PostID = p.PostID,
+                                     Name = c.Name,
+                                     Title = p.Title,
+                                     DateCreated = p.DateCreated,
+                                     LastModified = p.LastModified,
+                                     State = p.State,
+                                 });
+
+                return View(viewmodel.ToList());          
                 
             }
             

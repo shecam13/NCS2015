@@ -1,8 +1,6 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
 <address>
     One Microsoft Way<br />
@@ -15,3 +13,9 @@
     <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
     <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
 </address>
+
+@section PostTitle{
+    <h1>@ViewBag.Title</h1>
+    <hr class="small">
+    <span class="subheading">@ViewBag.Message</span>
+}

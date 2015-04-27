@@ -5,7 +5,6 @@
 }
 <link href="@Url.Content("~/Content/cleditor/jquery.cleditor.css")" rel="stylesheet" type="text/css" />
 
-<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
@@ -14,7 +13,7 @@
 
     <div class="form-horizontal">
         <fieldset>
-            <h4>Post</h4>
+            <h4>Edit Post</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.PostID)
@@ -80,4 +79,9 @@
         });
     </script>
 
+}
+
+@section PostTitle{
+    <h1>Edit</h1>
+    <hr class="small">
 }
