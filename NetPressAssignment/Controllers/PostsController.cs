@@ -38,6 +38,21 @@ namespace NetPressAssignment.Controllers
             {
                 //use include to get all post related information including the categories that will be stored in memmory
                 posts = db.Posts.Include(p => p.Category).ToList();
+
+                var viewmodel = (from p in db.Posts
+                                 join c in db.Categories on p.CategoryID equals c.CategoryID
+                                 //where userId == p.UserID
+                                 //where userID equals p.UserID
+                                 select new PostViewModel()
+                                 {
+                                     PostID = p.PostID,
+                                     Name = c.Name,
+                                     Title = p.Title,
+                                     DateCreated = p.DateCreated,
+                                     LastModified = p.LastModified,
+                                     State = p.State,
+                                 });
+                return View(viewmodel.ToList());   
             }
             //else show only the author's posts
             else

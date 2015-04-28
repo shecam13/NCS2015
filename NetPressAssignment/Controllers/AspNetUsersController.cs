@@ -7,115 +7,111 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NetPressAssignment.Models;
-using NetPressAssignment.ViewModels;
 
 namespace NetPressAssignment.Controllers
 {
-    [Authorize (Roles = "admin")]
-    public class CategoriesController : Controller
+    [Authorize(Roles = "admin")]
+    public class AspNetUsersController : Controller
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
 
-        CategoryViewModel categoryViewModel = new CategoryViewModel();
-
-        // GET: Categories
+        // GET: AspNetUsers
         public ActionResult Index()
         {
-            
-            return View(db.Categories.ToList());
+            return View(db.AspNetUsers.ToList());
         }
 
-        // GET: Categories/Details/5
-        public ActionResult Details(int? id)
+        // GET: AspNetUsers/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            if (aspNetUser == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(aspNetUser);
         }
 
-        // GET: Categories/Create
+        // GET: AspNetUsers/Create
         public ActionResult Create()
         {
-            return View(categoryViewModel);
+            return View();
         }
 
-        // POST: Categories/Create
+        // POST: AspNetUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryID,Name")] Category category)
+        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.AspNetUsers.Add(aspNetUser);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(aspNetUser);
         }
-      
-        // GET: Categories/Edit/5
-        public ActionResult Edit(int? id)
+
+        // GET: AspNetUsers/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            if (aspNetUser == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(aspNetUser);
         }
 
-        // POST: Categories/Edit/5
+        // POST: AspNetUsers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryID,Name")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUser aspNetUser)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(aspNetUser).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(aspNetUser);
         }
 
-        // GET: Categories/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: AspNetUsers/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            if (aspNetUser == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(aspNetUser);
         }
 
-        // POST: Categories/Delete/5
+        // POST: AspNetUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            AspNetUser aspNetUser = db.AspNetUsers.Find(id);
+            db.AspNetUsers.Remove(aspNetUser);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
