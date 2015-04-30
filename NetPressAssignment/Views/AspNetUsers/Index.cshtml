@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<NetPressAssignment.Models.AspNetUser>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Users";
 }
-
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -91,3 +89,8 @@
 }
 
 </table>
+
+@section PostTitle{
+    <h1>@ViewBag.Title</h1>
+    <hr class="small">
+}

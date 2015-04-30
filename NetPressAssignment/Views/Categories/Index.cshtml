@@ -2,10 +2,8 @@
 @*@model NetPressAssignment.ViewModels.CategoryViewModel*@
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categories";
 }
-
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -26,10 +24,15 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
+                @Html.ActionLink("View", "Details", new { id = item.CategoryID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID })
             </td>
         </tr>
     }
 
 </table>
+
+@section PostTitle{
+    <h1>@ViewBag.Title</h1>
+    <hr class="small">
+}

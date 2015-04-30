@@ -41,9 +41,10 @@
                     @*<div class=" post-preview">
                               @Html.ActionLink("View Post", "Details", "Posts", new { id = p.PostID }, null)<br/>
                         </div>*@
+                    <hr>
                 }
             </div>
-            <hr>
+            
 
             <!-- Pager -->
             <ul class="pager">
@@ -51,7 +52,6 @@
                 Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Posts
             </ul>
             
-
         </div>
         
     </div>

@@ -4,8 +4,6 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
     <h4>Category</h4>
     <hr />
@@ -24,3 +22,9 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+@section PostTitle{
+    <h1>@ViewBag.Title</h1>
+    <hr class="small">
+}
