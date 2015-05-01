@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NetPressAssignment.Models;
+using NetPressAssignment.ViewModels;
 
 namespace NetPressAssignment.Controllers
 {
@@ -18,7 +19,9 @@ namespace NetPressAssignment.Controllers
         // GET: AspNetUsers
         public ActionResult Index()
         {
+            //var userViewModel = new UserViewModel();
             return View(db.AspNetUsers.ToList());
+            //return View(userViewModel);
         }
 
         // GET: AspNetUsers/Details/5
@@ -37,15 +40,16 @@ namespace NetPressAssignment.Controllers
         }
 
         // GET: AspNetUsers/Create
+        /*
         public ActionResult Create()
         {
             return View();
-        }
+        } */
 
         // POST: AspNetUsers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] AspNetUser aspNetUser)
         {
@@ -57,10 +61,10 @@ namespace NetPressAssignment.Controllers
             }
 
             return View(aspNetUser);
-        }
+        } */
 
         // GET: AspNetUsers/Edit/5
-        public ActionResult Edit(string id)
+        /*public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -88,7 +92,7 @@ namespace NetPressAssignment.Controllers
                 return RedirectToAction("Index");
             }
             return View(aspNetUser);
-        }
+        } */
 
         // GET: AspNetUsers/Delete/5
         public ActionResult Delete(string id)
