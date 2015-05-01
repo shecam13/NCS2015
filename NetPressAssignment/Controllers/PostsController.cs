@@ -18,6 +18,7 @@ namespace NetPressAssignment.Controllers
     public class PostsController : Controller
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
+        private DateTime dateCreated;
 
         //String cs = System.Configuration.ConfigurationManager.ConnectionStrings["NetPressEntities"].ConnectionString;
 
@@ -158,24 +159,36 @@ namespace NetPressAssignment.Controllers
             {
                 return HttpNotFound();
             }
+            //this will be used in the post to keep the original date time created 
+            if (post.DateCreated.HasValue)
+            {
+                dateCreated = post.DateCreated.Value;
+            }
+            
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
             
             return View(post);
         }
+
+        public void setDateCreated(DateTime dateC)
+        {
+            DateTime dateCreated = dateC;
+        }
+
 
         // POST: Posts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PostID,Title,Body,CategoryID,State")] Post post)
+        public ActionResult Edit([Bind(Include = "PostID,Title,Body,CategoryID,State")] Post post, DateTime dateCreated)
         {
             if (ModelState.IsValid)
             {
                 //get the user id of the logged in user and save it to the post userid column
                 post.UserID = User.Identity.GetUserId();
                 //keep the same value for the date created 
-               
+                post.DateCreated = dateCreated;
                 //pass the date modified 
                 post.LastModified = DateTime.Now;
                 db.Entry(post).State = EntityState.Modified;

@@ -34,6 +34,7 @@ namespace NetPressAssignment.Controllers
 
             var posts = db.Posts.Where(x => x.State == 2).ToList();
             var posts2 = posts.OrderByDescending(x => x.DateCreated);  //order by descending according to date created.
+            //string noResult = "Search result not found";
              
 
             var CList = new List<string>();
@@ -47,25 +48,35 @@ namespace NetPressAssignment.Controllers
 
             var posts3 = from p in db.Posts
                          select p;
-
-
-            if (!string.IsNullOrEmpty(authorSearch))  //searching by author
+            if (!string.IsNullOrEmpty(authorSearch) || !string.IsNullOrEmpty(postCategory) || !string.IsNullOrEmpty(searchString))
             {
-                posts3 = posts3.Where(g => g.AspNetUser.UserName == authorSearch);
+                if (!string.IsNullOrEmpty(authorSearch))  //searching by author
+                {
+                    posts3 = posts3.Where(g => g.AspNetUser.UserName == authorSearch);
+                }
+                if (!string.IsNullOrEmpty(postCategory))  //searching by Category (already in the database)
+                {
+                    posts3 = posts3.Where(c => c.Category.Name == postCategory);
+
+                }
+                if (!string.IsNullOrEmpty(searchString))  //searching by Title
+                {
+                    posts3 = posts3.Where(s => s.Title.Contains(searchString));
+                    //if (posts3.Count() == 0)
+                    //{
+                    //    return View(noResult);
+                    //}
+                }
+
                 return View(posts3.OrderByDescending(x => x.DateCreated).ToPagedList(page ?? 1, 3));
             }
-            if (!string.IsNullOrEmpty(postCategory))  //searching by Category (already in the database)
+            else
             {
-                posts3 = posts3.Where(c => c.Category.Name == postCategory);
-                return View(posts3.OrderByDescending(x => x.DateCreated).ToPagedList(page ?? 1, 3));
+                return View(posts2.ToPagedList(page ?? 1, 3));
             }
-            if (!string.IsNullOrEmpty(searchString))  //searching by Title
-            {
-                posts3 = posts3.Where(s => s.Title.Contains(searchString));
-                return View(posts3.OrderByDescending(x => x.DateCreated).ToPagedList(page ?? 1, 3));
-            }
+            
 
-            return View(posts2.ToPagedList(page ?? 1, 3));
+            
         }
 
         public ActionResult About()
