@@ -21,8 +21,14 @@
         }
         <hr>
 
+          
+
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-preview">
+                @if (Model.Count() == 0)
+                {
+                    <h2 class="pager">There are no posts!</h2>
+                }  
                    
                 @foreach (var p in Model)
                 {
@@ -49,7 +55,7 @@
             <!-- Pager -->
             <ul class="pager">
                 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, authorSearch = Request.QueryString["authorSearch"], postCategory = Request.QueryString["postCategory"], searchString = Request.QueryString["searchString"] }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
-                Showing @Model.FirstItemOnPage to @Model.LastItemOnPage of @Model.TotalItemCount Posts
+                Showing @Model.LastItemOnPage of @Model.TotalItemCount Posts
             </ul>
             
         </div>

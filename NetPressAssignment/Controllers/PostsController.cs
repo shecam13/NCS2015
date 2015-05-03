@@ -18,6 +18,7 @@ namespace NetPressAssignment.Controllers
     public class PostsController : Controller
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
+        private DateTime dateCreated;
 
         //String cs = System.Configuration.ConfigurationManager.ConnectionStrings["NetPressEntities"].ConnectionString;
 
@@ -155,11 +156,11 @@ namespace NetPressAssignment.Controllers
             }
 
             ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name", mpvm.CategoryID);
-            //  ViewBag.StateList = new SelectList(db.Posts, "State");
-
+        //  ViewBag.StateList = new SelectList(db.Posts, "State");
+            
             return View(mpvm);
         }
-
+           
         // GET: Posts/Create
         //public ActionResult Create()
         //{
@@ -209,6 +210,12 @@ namespace NetPressAssignment.Controllers
             {
                 return HttpNotFound();
             }
+            //this will be used in the post to keep the original date time created 
+            if (post.DateCreated.HasValue)
+            {
+                dateCreated = post.DateCreated.Value;
+            }
+            
 
             var mpvm = new ModifyPostViewModel
             {
@@ -220,10 +227,16 @@ namespace NetPressAssignment.Controllers
             };
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-
+            
 
             return View(mpvm);
         }
+
+        public void setDateCreated(DateTime dateC)
+        {
+            DateTime dateCreated = dateC;
+        }
+
 
         // POST: Posts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -240,7 +253,7 @@ namespace NetPressAssignment.Controllers
                 UpdatePost(existingPost, mpvm);
                 existingPost.UserID = User.Identity.GetUserId();
                 //keep the same value for the date created 
-
+                post.DateCreated = dateCreated;
                 //pass the date modified 
                 existingPost.LastModified = DateTime.Now;
                 //db.Entry(post).State = EntityState.Modified;
@@ -248,7 +261,7 @@ namespace NetPressAssignment.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", mpvm.CategoryID);
-
+            
             return View(mpvm);
         }
 
