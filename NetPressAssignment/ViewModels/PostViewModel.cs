@@ -7,12 +7,6 @@ using System.Web.Mvc;
 
 namespace NetPressAssignment.ViewModels
 {
-    //public enum states
-    //{
-    //    Draft = 1,
-    //    Published = 2,
-    //    Archived = 3
-    //}
 
     public class PostViewModel
     {
@@ -23,6 +17,7 @@ namespace NetPressAssignment.ViewModels
         [Display(Name="Category")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Title is required.")]
         public string Title { get; set; }
 
         [AllowHtmlAttribute]
@@ -60,5 +55,23 @@ namespace NetPressAssignment.ViewModels
 
         //public virtual AspNetUser AspNetUser { get; set; }
         //public virtual Category Category { get; set; }
+    }
+
+    public class ModifyPostViewModel
+    {
+        [Key]
+        [HiddenInput(DisplayValue = false)]
+        public int PostID { get; set; }
+
+        [Required(ErrorMessage = "Title is required.")]
+        public string Title { get; set; }
+
+        [Required(ErrorMessage = "Body is required.")]
+        [AllowHtmlAttribute]
+        public string Body { get; set; }
+
+        public int CategoryID { get; set; }
+
+        public Nullable<int> State { get; set; }
     }
 }

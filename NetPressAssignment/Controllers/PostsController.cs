@@ -108,43 +108,94 @@ namespace NetPressAssignment.Controllers
             return View(post);
         }
 
-        // GET: Posts/Create
         public ActionResult Create()
         {
             //lists are loaded in the view 
             ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name");
             //ViewBag.StateList = new SelectList(db.Posts, "State");
 
-            return View();
+            return View(new ModifyPostViewModel());
         }
 
-        // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        private void UpdatePost(Post post, ModifyPostViewModel mpvm)
+        {
+            post.PostID = mpvm.PostID;
+            post.Title = mpvm.Title;
+            post.Body = mpvm.Body;
+            post.CategoryID = mpvm.CategoryID;
+            post.State = mpvm.State;
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         //it is not important to bind everything, just bind items that are requested in the view
-        public ActionResult Create([Bind(Include = "Title,Body,CategoryID,State")] Post post)
+        public ActionResult Create(ModifyPostViewModel mpvm)
         {
-      
             if (ModelState.IsValid)
             {
+                var post = new Post();
+
+                UpdatePost(post, mpvm);
+
+                post.UserID = User.Identity.GetUserId();
+                post.DateCreated = DateTime.Now;
+                post.LastModified = DateTime.Now;
+
+                db.Posts.Add(post);
+                db.SaveChanges();
+
                 //get the user id of the logged in user and save it to the post userid column
                 post.UserID = User.Identity.GetUserId();
                 //pass the date created and modified 
-                post.DateCreated = DateTime.Now;
-                post.LastModified = DateTime.Now;
+               
                 db.Posts.Add(post);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-        //  ViewBag.StateList = new SelectList(db.Posts, "State");
-            
-           
-            return View(post);
+            ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name", mpvm.CategoryID);
+            //  ViewBag.StateList = new SelectList(db.Posts, "State");
+
+            return View(mpvm);
         }
+
+        // GET: Posts/Create
+        //public ActionResult Create()
+        //{
+        //    //lists are loaded in the view 
+        //    ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name");
+        //    //ViewBag.StateList = new SelectList(db.Posts, "State");
+
+        //    return View();
+        //}
+
+        // POST: Posts/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        ////it is not important to bind everything, just bind items that are requested in the view
+        //public ActionResult Create([Bind(Include = "Title,Body,CategoryID,State")] Post post)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        //get the user id of the logged in user and save it to the post userid column
+        //        post.UserID = User.Identity.GetUserId();
+        //        //pass the date created and modified 
+        //        post.DateCreated = DateTime.Now;
+        //        post.LastModified = DateTime.Now;
+        //        db.Posts.Add(post);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
+        //    //  ViewBag.StateList = new SelectList(db.Posts, "State");
+
+        //    return View(post);
+        //}
 
         // GET: Posts/Edit/5
         public ActionResult Edit(int? id)
@@ -158,9 +209,20 @@ namespace NetPressAssignment.Controllers
             {
                 return HttpNotFound();
             }
+
+            var mpvm = new ModifyPostViewModel
+            {
+                PostID = post.PostID,
+                Title = post.Title,
+                Body = post.Body,
+                CategoryID = post.CategoryID,
+                State = post.State,
+            };
+
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            
-            return View(post);
+
+
+            return View(mpvm);
         }
 
         // POST: Posts/Edit/5
@@ -168,24 +230,68 @@ namespace NetPressAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PostID,Title,Body,CategoryID,State")] Post post)
+        public ActionResult Edit(ModifyPostViewModel mpvm)
         {
             if (ModelState.IsValid)
             {
+                var existingPost = db.Posts.Find(mpvm.PostID);
                 //get the user id of the logged in user and save it to the post userid column
-                post.UserID = User.Identity.GetUserId();
+
+                UpdatePost(existingPost, mpvm);
+                existingPost.UserID = User.Identity.GetUserId();
                 //keep the same value for the date created 
-               
+
                 //pass the date modified 
-                post.LastModified = DateTime.Now;
-                db.Entry(post).State = EntityState.Modified;
+                existingPost.LastModified = DateTime.Now;
+                //db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            
-            return View(post);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", mpvm.CategoryID);
+
+            return View(mpvm);
         }
+
+        //// GET: Posts/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Post post = db.Posts.Find(id);
+        //    if (post == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
+            
+        //    return View(post);
+        //}
+
+        //// POST: Posts/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "PostID,Title,Body,CategoryID,State")] Post post)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //get the user id of the logged in user and save it to the post userid column
+        //        post.UserID = User.Identity.GetUserId();
+        //        //keep the same value for the date created 
+               
+        //        //pass the date modified 
+        //        post.LastModified = DateTime.Now;
+        //        db.Entry(post).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
+            
+        //    return View(post);
+        //}
 
         // GET: Posts/Delete/5
         public ActionResult Delete(int? id)
