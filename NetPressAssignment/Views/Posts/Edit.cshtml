@@ -52,7 +52,8 @@
                     @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
                 </div>
             </div>
-            @Html.Hidden("DateCreated", Model.DateCreated);
+            
+            @*@Html.Hidden("DateCreated", Model.DateCreated);*@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">

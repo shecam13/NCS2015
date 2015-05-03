@@ -79,9 +79,6 @@ namespace NetPressAssignment.Controllers
                 return View(viewmodel.ToList());          
                 
             }
-            
-            return View(posts);
-            
         }
 
 
@@ -211,10 +208,10 @@ namespace NetPressAssignment.Controllers
                 return HttpNotFound();
             }
             //this will be used in the post to keep the original date time created 
-            if (post.DateCreated.HasValue)
-            {
-                dateCreated = post.DateCreated.Value;
-            }
+            //if (post.DateCreated.HasValue)
+            //{
+            //    dateCreated = post.DateCreated.Value;
+            //}
             
 
             var mpvm = new ModifyPostViewModel
@@ -232,10 +229,10 @@ namespace NetPressAssignment.Controllers
             return View(mpvm);
         }
 
-        public void setDateCreated(DateTime dateC)
-        {
-            DateTime dateCreated = dateC;
-        }
+        //public void setDateCreated(DateTime dateC)
+        //{
+        //    DateTime dateCreated = dateC;
+        //}
 
 
         // POST: Posts/Edit/5
@@ -253,7 +250,7 @@ namespace NetPressAssignment.Controllers
                 UpdatePost(existingPost, mpvm);
                 existingPost.UserID = User.Identity.GetUserId();
                 //keep the same value for the date created 
-                post.DateCreated = dateCreated;
+                //existingPost.DateCreated = dateCreated;
                 //pass the date modified 
                 existingPost.LastModified = DateTime.Now;
                 //db.Entry(post).State = EntityState.Modified;
