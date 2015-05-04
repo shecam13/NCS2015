@@ -140,8 +140,8 @@ namespace NetPressAssignment.Controllers
                 post.DateCreated = DateTime.Now;
                 post.LastModified = DateTime.Now;
 
-                db.Posts.Add(post);
-                db.SaveChanges();
+                //db.Posts.Add(post);
+                //db.SaveChanges();
 
                 //get the user id of the logged in user and save it to the post userid column
                 post.UserID = User.Identity.GetUserId();

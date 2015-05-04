@@ -21,8 +21,17 @@ namespace NetPressAssignment.Controllers
         // GET: Categories
         public ActionResult Index()
         {
-            
-            return View(db.Categories.ToList());
+            var viewmodel = (from c in db.Categories
+                             
+                             //where userId == p.UserID
+                             //where userID equals p.UserID
+                             select new CategoryViewModel()
+                             {
+                                 Name = c.Name,
+                                 CategoryID = c.CategoryID,
+                             });
+            //return View(db.Categories.ToList());
+            return View(viewmodel.ToList());
         }
 
         // GET: Categories/Details/5
@@ -33,6 +42,7 @@ namespace NetPressAssignment.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Category category = db.Categories.Find(id);
+         
             if (category == null)
             {
                 return HttpNotFound();

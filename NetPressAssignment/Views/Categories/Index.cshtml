@@ -1,5 +1,5 @@
-﻿@model IEnumerable<NetPressAssignment.Models.Category>
-@*@model NetPressAssignment.ViewModels.CategoryViewModel*@
+﻿@*@model IEnumerable<NetPressAssignment.Models.Category>*@
+@model IEnumerable<NetPressAssignment.ViewModels.CategoryViewModel>
 
 @{
     ViewBag.Title = "Categories";
@@ -9,7 +9,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table table-hover">
-    <tr>
+    <tr class ="h3 success">
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
