@@ -25,12 +25,9 @@ namespace NetPressAssignment.Controllers
         // GET: Posts
         public ActionResult Index() //int page = 1, int pageSize = 10
         {
-            //this code is repeated in Home Controller index() method --> Decide where it is needed? 
-
             //get the logged in userId by using Identity
             var userId = User.Identity.GetUserId();
                         
-
             //create a list of posts that will be returned to the view
             List<Post> posts = null;
             
@@ -81,15 +78,6 @@ namespace NetPressAssignment.Controllers
             }
         }
 
-
-        public ActionResult GetPosts()
-        {
-            var userId = User.Identity.GetUserId();
-            //var posts = db.Posts.Where(x => x.State == state).Where(x => x.UserID == userId); 
-            var posts = db.Posts.Where(x => x.UserID == userId); 
-            return View(posts.ToList());      
-        } 
-
         // GET: Posts/Details/5
         [AllowAnonymous]
         public ActionResult Details(int? id)
@@ -115,6 +103,7 @@ namespace NetPressAssignment.Controllers
             return View(new ModifyPostViewModel());
         }
 
+        // map the values of the view model to a post object
         private void UpdatePost(Post post, ModifyPostViewModel mpvm)
         {
             post.PostID = mpvm.PostID;
@@ -140,9 +129,6 @@ namespace NetPressAssignment.Controllers
                 post.DateCreated = DateTime.Now;
                 post.LastModified = DateTime.Now;
 
-                //db.Posts.Add(post);
-                //db.SaveChanges();
-
                 //get the user id of the logged in user and save it to the post userid column
                 post.UserID = User.Identity.GetUserId();
                 //pass the date created and modified 
@@ -157,43 +143,6 @@ namespace NetPressAssignment.Controllers
             
             return View(mpvm);
         }
-           
-        // GET: Posts/Create
-        //public ActionResult Create()
-        //{
-        //    //lists are loaded in the view 
-        //    ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name");
-        //    //ViewBag.StateList = new SelectList(db.Posts, "State");
-
-        //    return View();
-        //}
-
-        // POST: Posts/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        ////it is not important to bind everything, just bind items that are requested in the view
-        //public ActionResult Create([Bind(Include = "Title,Body,CategoryID,State")] Post post)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        //get the user id of the logged in user and save it to the post userid column
-        //        post.UserID = User.Identity.GetUserId();
-        //        //pass the date created and modified 
-        //        post.DateCreated = DateTime.Now;
-        //        post.LastModified = DateTime.Now;
-        //        db.Posts.Add(post);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.CategoryList = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-        //    //  ViewBag.StateList = new SelectList(db.Posts, "State");
-
-        //    return View(post);
-        //}
 
         // GET: Posts/Edit/5
         public ActionResult Edit(int? id)
@@ -207,13 +156,7 @@ namespace NetPressAssignment.Controllers
             {
                 return HttpNotFound();
             }
-            //this will be used in the post to keep the original date time created 
-            //if (post.DateCreated.HasValue)
-            //{
-            //    dateCreated = post.DateCreated.Value;
-            //}
             
-
             var mpvm = new ModifyPostViewModel
             {
                 PostID = post.PostID,
@@ -229,12 +172,6 @@ namespace NetPressAssignment.Controllers
             return View(mpvm);
         }
 
-        //public void setDateCreated(DateTime dateC)
-        //{
-        //    DateTime dateCreated = dateC;
-        //}
-
-
         // POST: Posts/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -245,15 +182,16 @@ namespace NetPressAssignment.Controllers
             if (ModelState.IsValid)
             {
                 var existingPost = db.Posts.Find(mpvm.PostID);
-                //get the user id of the logged in user and save it to the post userid column
+                
 
                 UpdatePost(existingPost, mpvm);
+
+                //get the user id of the logged in user and save it to the post userid column
                 existingPost.UserID = User.Identity.GetUserId();
-                //keep the same value for the date created 
-                //existingPost.DateCreated = dateCreated;
+
                 //pass the date modified 
                 existingPost.LastModified = DateTime.Now;
-                //db.Entry(post).State = EntityState.Modified;
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -262,46 +200,6 @@ namespace NetPressAssignment.Controllers
             return View(mpvm);
         }
 
-        //// GET: Posts/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Post post = db.Posts.Find(id);
-        //    if (post == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            
-        //    return View(post);
-        //}
-
-        //// POST: Posts/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "PostID,Title,Body,CategoryID,State")] Post post)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        //get the user id of the logged in user and save it to the post userid column
-        //        post.UserID = User.Identity.GetUserId();
-        //        //keep the same value for the date created 
-               
-        //        //pass the date modified 
-        //        post.LastModified = DateTime.Now;
-        //        db.Entry(post).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            
-        //    return View(post);
-        //}
 
         // GET: Posts/Delete/5
         public ActionResult Delete(int? id)

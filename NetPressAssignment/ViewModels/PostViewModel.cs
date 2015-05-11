@@ -29,8 +29,6 @@ namespace NetPressAssignment.ViewModels
         [Display(Name = "Last Modified")]
         public Nullable<System.DateTime> LastModified { get; set; }
         
-        //public string UserID { get; set; }
-        
         public Nullable<int> State { get; set; }
 
         public string getState()
@@ -52,9 +50,6 @@ namespace NetPressAssignment.ViewModels
             
             return str;
         }
-
-        //public virtual AspNetUser AspNetUser { get; set; }
-        //public virtual Category Category { get; set; }
     }
 
     public class ModifyPostViewModel
