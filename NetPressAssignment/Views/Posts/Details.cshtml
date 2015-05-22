@@ -13,7 +13,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    @*@Html.DisplayFor(model => model.Body)*@
                     @Html.Raw(Model.Body)
                     <br><br>
                     <span class="post-meta">Posted by <i>@Html.DisplayFor(model => model.AspNetUser.UserName)</i> on <i>@Html.DisplayFor(model => model.LastModified)</i> </span>
@@ -39,11 +38,6 @@
             <i class=" fa fa-pencil fa-3x"></i> 
         </a>
     }  
-    
-    
-    
-
-
 </p>
 
 @section PostTitle{

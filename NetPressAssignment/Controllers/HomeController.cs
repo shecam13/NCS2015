@@ -34,9 +34,7 @@ namespace NetPressAssignment.Controllers
 
             var posts = db.Posts.Where(x => x.State == 2).ToList();
             var posts2 = posts.OrderByDescending(x => x.DateCreated);  //order by descending according to date created.
-            //string noResult = "Search result not found";
              
-
             var CList = new List<string>();
 
             var CQuery = from c in db.Categories  //query to get the category name ordered 
@@ -63,10 +61,6 @@ namespace NetPressAssignment.Controllers
                 if (!string.IsNullOrEmpty(searchString))  //searching by Title
                 {
                     posts3 = posts3.Where(s => s.Title.Contains(searchString));
-                    //if (posts3.Count() == 0)
-                    //{
-                    //    return View(noResult);
-                    //}
                 }
 
                 return View(posts3.OrderByDescending(x => x.DateCreated).ToPagedList(page ?? 1, 3));
@@ -74,10 +68,7 @@ namespace NetPressAssignment.Controllers
             else
             {
                 return View(posts2.ToPagedList(page ?? 1, 3));
-            }
-            
-
-            
+            }   
         }
 
         public ActionResult About()
