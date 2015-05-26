@@ -19,6 +19,7 @@ namespace NetPressAssignment.Controllers
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
         private DateTime dateCreated;
+        
 
         //String cs = System.Configuration.ConfigurationManager.ConnectionStrings["NetPressEntities"].ConnectionString;
 
