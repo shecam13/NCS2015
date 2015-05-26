@@ -14,13 +14,9 @@ using Microsoft.AspNet.Identity;
 
 namespace NetPressAssignment.Controllers
 {
-    [Authorize]
     public class PostsController : Controller
     {
-        private NetPressAssignmentContext db = new NetPressAssignmentContext();
-        private DateTime dateCreated;
-
-        //String cs = System.Configuration.ConfigurationManager.ConnectionStrings["NetPressEntities"].ConnectionString;
+        private NetPressAssignmentContext db = new NetPressAssignmentContext();    
 
         // GET: Posts
         public ActionResult Index() //int page = 1, int pageSize = 10
@@ -80,18 +76,21 @@ namespace NetPressAssignment.Controllers
 
         // GET: Posts/Details/5
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            PostSecurity ps = new PostSecurity();
+            var userId = User.Identity.GetUserId();
+            
+            if (ps.hasAccessTo(id, userId))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Post post = db.Posts.Find(id);
+
+                return View(post);
             }
-            Post post = db.Posts.Find(id);
-            if (post == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(post);
         }
 
         public ActionResult Create()
@@ -145,31 +144,37 @@ namespace NetPressAssignment.Controllers
         }
 
         // GET: Posts/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            PostSecurity ps = new PostSecurity();
+            var userId = User.Identity.GetUserId();
+           
+            if (ps.hasAccessTo(id, userId))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-            
-            var mpvm = new ModifyPostViewModel
-            {
-                PostID = post.PostID,
-                Title = post.Title,
-                Body = post.Body,
-                CategoryID = post.CategoryID,
-                State = post.State,
-            };
+                Post post = db.Posts.Find(id);
+                if (post == null)
+                {
+                    return HttpNotFound();
+                }
 
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
-            
+                var mpvm = new ModifyPostViewModel
+                {
+                    PostID = post.PostID,
+                    Title = post.Title,
+                    Body = post.Body,
+                    CategoryID = post.CategoryID,
+                    State = post.State,
+                };
 
-            return View(mpvm);
+                ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", post.CategoryID);
+
+
+                return View(mpvm);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // POST: Posts/Edit/5
@@ -200,20 +205,24 @@ namespace NetPressAssignment.Controllers
             return View(mpvm);
         }
 
-
         // GET: Posts/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            PostSecurity ps = new PostSecurity();
+            var userId = User.Identity.GetUserId();
+            if (ps.hasAccessTo(id, userId))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Post post = db.Posts.Find(id);
+                if (post == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(post);
             }
-            Post post = db.Posts.Find(id);
-            if (post == null)
+            else
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Home");
             }
-            return View(post);
         }
 
         // POST: Posts/Delete/5
