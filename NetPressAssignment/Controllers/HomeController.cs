@@ -37,15 +37,16 @@ namespace NetPressAssignment.Controllers
              
             var CList = new List<string>();
 
-            var CQuery = from c in db.Categories
+            var CQuery = from c in db.Categories  //query to get the category name ordered 
                          orderby c.Name
                          select c.Name;
 
-            CList.AddRange(CQuery.Distinct());
+            CList.AddRange(CQuery.Distinct());    //Adds the elements of the specified collection to the end of the list. It is only adding the distinct values of CQuery results. 
             ViewBag.postCategory = new SelectList(CList);
 
-            var posts3 = from p in db.Posts
+            var posts3 = from p in db.Posts    //getting the posts for the database
                          select p;
+
             if (!string.IsNullOrEmpty(authorSearch) || !string.IsNullOrEmpty(postCategory) || !string.IsNullOrEmpty(searchString))
             {
                 if (!string.IsNullOrEmpty(authorSearch))  //searching by author
