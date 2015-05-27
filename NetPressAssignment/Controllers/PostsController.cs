@@ -76,21 +76,19 @@ namespace NetPressAssignment.Controllers
 
         // GET: Posts/Details/5
         [AllowAnonymous]
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            PostSecurity ps = new PostSecurity();
-            var userId = User.Identity.GetUserId();
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+            Post post = db.Posts.Find(id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+            return View(post);
             
-            if (ps.hasAccessTo(id, userId))
-            {
-                Post post = db.Posts.Find(id);
-
-                return View(post);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
         }
 
         public ActionResult Create()
@@ -148,8 +146,9 @@ namespace NetPressAssignment.Controllers
         {
             PostSecurity ps = new PostSecurity();
             var userId = User.Identity.GetUserId();
+            var userRole = User.IsInRole("admin");
            
-            if (ps.hasAccessTo(id, userId))
+            if (ps.hasAccessTo(id, userId, userRole))
             {
                 Post post = db.Posts.Find(id);
                 if (post == null)
@@ -192,7 +191,11 @@ namespace NetPressAssignment.Controllers
                 UpdatePost(existingPost, mpvm);
 
                 //get the user id of the logged in user and save it to the post userid column
-                existingPost.UserID = User.Identity.GetUserId();
+                if (!User.IsInRole("admin"))
+                {
+                    existingPost.UserID = User.Identity.GetUserId();
+                }
+               
 
                 //pass the date modified 
                 existingPost.LastModified = DateTime.Now;
@@ -210,7 +213,8 @@ namespace NetPressAssignment.Controllers
         {
             PostSecurity ps = new PostSecurity();
             var userId = User.Identity.GetUserId();
-            if (ps.hasAccessTo(id, userId))
+            var userRole = User.IsInRole("admin");
+            if (ps.hasAccessTo(id, userId, userRole))
             {
                 Post post = db.Posts.Find(id);
                 if (post == null)

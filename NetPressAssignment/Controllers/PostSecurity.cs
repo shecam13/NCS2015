@@ -11,7 +11,7 @@ namespace NetPressAssignment.Controllers
     {
         private NetPressAssignmentContext db = new NetPressAssignmentContext();
 
-        public Boolean hasAccessTo (int? postId, String userId)
+        public Boolean hasAccessTo (int? postId, String userId, Boolean userRole)
         {
             // if post id is null return false immediately
             if (postId == null)
@@ -22,8 +22,9 @@ namespace NetPressAssignment.Controllers
             // check that the post belongs to the user
             Post post = db.Posts.Find(postId);
             var userID = post.UserID;
+            
 
-            if (userID == userId)
+            if (userID == userId || userRole)
             {
                 return true;
             }
