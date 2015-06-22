@@ -21,7 +21,7 @@ namespace NetPressAssignment.ViewModels
         public string Title { get; set; }
 
         [AllowHtmlAttribute]
-        public string Body { get; set; }
+        public MvcHtmlString Body { get; set; }
 
         [Display(Name = "Date Created")]
         public Nullable<System.DateTime> DateCreated { get; set; }
